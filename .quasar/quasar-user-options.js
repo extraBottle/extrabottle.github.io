@@ -11,7 +11,7 @@
  * Boot files are your "main.js"
  **/
 
-import lang from 'quasar/lang/ko-KR'
+import lang from 'quasar/lang/ko-KR.js'
 
 
 
