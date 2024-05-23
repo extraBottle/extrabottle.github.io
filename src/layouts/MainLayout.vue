@@ -12,10 +12,8 @@
         />
 
         <q-toolbar-title>
-          {{ route.name }}
+          <a href="https://extrabottle.github.io/pkmSleepCalc/">계산기는 여기 클릭</a>
         </q-toolbar-title>
-
-        <div>v{{ myVersion }}<br>@두번째유리병</div>
       </q-toolbar>
     </q-header>
 
@@ -31,7 +29,7 @@
           class="q-py-sm row justify-between items-center"
           style="background-color: antiquewhite;"
         >
-          이런 것도 있어요
+          테스트 페이지 입니다
           <q-btn icon="home" flat round to="/" dense></q-btn>
         </q-item-label>
 

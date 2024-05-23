@@ -27,7 +27,7 @@
             </q-chip>
             <q-btn style="position: absolute; right: -30px;" color="grey-5" icon="help" round flat dense @click="showHelp = true"></q-btn>
           </div>        
-          <q-btn class="absolute-center" flat round @click="clickCalc">
+          <q-btn class="absolute-center" flat round @click="clickCalc(calc)">
             <q-card v-if="calc.children[0].meta.title.includes('이브이')" class="bg-sSkill shadow-8 flex flex-center" style="width: 150px; height: 150px;">
               <q-badge color="secondary" label="Click" rounded floating />
               <q-img src="images/eeveeLink.png" height="130px" width="130px">
@@ -67,7 +67,6 @@
           </q-dialog>          
         </q-carousel-slide>
       </q-carousel>
-      <q-btn push class="absolute-bottom-right text-h6" color="primary" label="시작하기" @click="clickCalc" padding="md lg"></q-btn>
     </div>
   </q-page>
 </template>
@@ -75,7 +74,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue';
-import { triggerEvent } from 'src/utils/gtmAddEvent';
 import routes from 'src/router/routes'
 defineOptions({
   name: 'IndexPage'
@@ -99,9 +97,8 @@ function randPick(){
 const randImage = ref(`images/${imgList[randPick()]}.png`)
 const showHelp = ref(false)
 
-function clickCalc(){
-  triggerEvent('enter_calc_from_home')
-  router.push({ name: slide.value })
+function clickCalc(a){
+  window.location.href = a.children[0].meta.link
 }
 
 </script>

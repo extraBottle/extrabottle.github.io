@@ -1,8 +1,8 @@
 <template>
   <q-item
     clickable
-    :to="routeName"
-    @click="triggerEvent('enter_calc_from_menu')"
+    tag="a"
+    :href="props.meta.link"
   >
     <q-item-section
       v-if="props.meta.icon"
@@ -21,7 +21,6 @@
 </template>
 
 <script setup>
-import { triggerEvent } from 'src/utils/gtmAddEvent';
 
 defineOptions({
   name: 'EssentialLink'
@@ -45,8 +44,11 @@ const props = defineProps({
     icon: {
       type: String,
       default: ''
+    },
+    link: {
+      type: String,
+      default: '#'
     }
   }
 })
-const routeName = { name: props.name }
 </script>

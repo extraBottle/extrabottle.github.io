@@ -5,14 +5,11 @@
 <script setup>
 import { stopLoading } from './utils/loading'
 import { popupFail } from './utils/popup'
-import { useRoute ,useRouter } from 'vue-router';
-import { ref, onErrorCaptured } from 'vue';
-import { useMeta } from 'quasar';
+import { useRouter } from 'vue-router';
+import { onErrorCaptured } from 'vue';
 defineOptions({
   name: 'App'
 });
-
-const route = useRoute()
 
 // 오류 발생시 메인화면으로 보냄
 const router = useRouter()
@@ -22,16 +19,4 @@ onErrorCaptured(()=>{
   popupFail('오류가 발생했습니다')
 })
 
-// dynamic meta tag
-useMeta(()=>{
-  const pageName = ref(route.name)
-  const desc = ref(route.meta.help)
-  return {
-    title: pageName.value,
-    titleTemplate: title => `${title} - 포켓몬 슬립`,     
-    meta: {
-      description: { name: 'description', content: desc.value }
-    }
-  }
-})
 </script>
