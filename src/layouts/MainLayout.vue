@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          <a href="https://extrabottle.github.io/pkmSleepCalc/">계산기는 여기 클릭</a>
+          {{ route.name }}
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -29,7 +29,7 @@
           class="q-py-sm row justify-between items-center"
           style="background-color: antiquewhite;"
         >
-          테스트 페이지 입니다
+          이런 것도 있어요
           <q-btn icon="home" flat round to="/" dense></q-btn>
         </q-item-label>
 
@@ -71,7 +71,6 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router';
 import EssentialLink from 'components/EssentialLink.vue'
-import VersionInfo from '../../package.json'
 import routes from 'src/router/routes'
 
 defineOptions({
@@ -79,7 +78,6 @@ defineOptions({
 })
 
 const route = useRoute()
-const myVersion = VersionInfo.version
 const linksList = routes.slice(1, routes.length - 1)
 
 const leftDrawerOpen = ref(false)
