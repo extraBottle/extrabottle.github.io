@@ -58,7 +58,7 @@ module.exports = configure(function () {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: "/",
+      publicPath: "",
       // publicPath: 'https://extrabottle.github.io/',
       // analyze: true,
       // env: {},
