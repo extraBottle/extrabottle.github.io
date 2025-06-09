@@ -122,7 +122,7 @@ const selectedPkmDex = ref(myInputStore.selectedPkmDex)
 const selectPkmImage = ref(myDownloadStore.fetchImage('pkm', selectedPkmDex.value))
 
 onBeforeUnmount(()=>{
-  myRateCalcStore.storeRate(pkmName.value, pkmLevel, orderData.value, useHealer, minOrderData.value, hasHb, vsOutput.value, oneBest.value)
+  myRateCalcStore.storeRate(pkmName.value, pkmLevel, orderData.value, minOrderData.value, hasHb, vsOutput.value, oneBest.value)
 })
 
 const prop = defineProps({
@@ -141,7 +141,6 @@ const downMult = myPkmDBStore.downMult
 const mySub = myInputStore.subSkills
 const allData = myPkmDBStore.searchPkmData('name', myPkmDBStore.convertKorEn(pkmName.value))
 const maxHS = myPkmDBStore.maxHS
-const evoCount = myInputStore.evoCount
 const secondIngName = myInputStore.secondIng
 const thirdIngName = myInputStore.thirdIng
 let mainSkillLevel = myInputStore.mainSkillLevel
@@ -154,7 +153,7 @@ const ribbonLev = ref(myInputStore.ribbonLev)
 const maxE = myPkmDBStore.maxE
 const totalMainSkill = myPkmDBStore.totalMainSkill
 const mainSkillLevelH = myHealerInputStore.mainSkillLevel
-const calcVer = myHealerInputStore.calcVer
+// const calcVer = myHealerInputStore.calcVer
 const skillCount = myHealerInputStore.fixedHealSkillCount
 const pkmNameH = myHealerInputStore.pkmName
 const allDataH = myPkmDBStore.searchPkmData('name', myPkmDBStore.convertKorEn(pkmNameH))
@@ -173,7 +172,8 @@ const orderData = ref(myRateCalcStore.orderData)
 const minOrderData = ref(myRateCalcStore.minOrderData)
 // 나 vs 1등
 const vsOutput = ref(myRateCalcStore.vsOutput)
-const useHealer = myHealerInputStore.calcVer === 'lightVer' ? true : false
+// 피검사 포켓몬이 힐러면 추가 힐러는 자동으로 체크해제
+const useHealer = (allData.specialty === "skill" && allData.skill.name === "Energy For Everyone") ? false : myRateCalcStore.useHealer
 // 도우미보너스 존재 유무
 let hasHb = false
 for(let i=0; i < mySub.length; i++){
@@ -201,7 +201,7 @@ onBeforeMount(async()=>{
   try{
       if(prop.startLoad){   
         const addValidSub = []
-        if(allData.specialty === "skill"){
+        if(allData.specialty === "skill"){          
           // 스킬몬은 스킬 레벨업 서브가 꽝
           myPkmDBStore.allSubSkillList.forEach((e)=>{
             if(e.label === "도우미 보너스" || e.label === "기력 회복 보너스"){
@@ -258,14 +258,13 @@ onBeforeMount(async()=>{
           "selfHealSkillData": selfHealSkillData,
           "randHealSkillData":randHealSkillData ,
           "totalMainSkill": totalMainSkill,
-          "evoCount": evoCount,
           "secondIngName": secondIngName,
           "thirdIngName": thirdIngName,
           "mainSkillLevel": mainSkillLevel,
           "mealRecovery": mealRecovery,
           "maxE": maxE,
           "mainSkillLevelH": mainSkillLevelH,
-          "calcVer": calcVer,
+          "useHealer": useHealer,
           "skillCount": skillCount,                      
           "enerPerHour": enerPerHour,
           "speedEnerMultList": speedEnerMultList,

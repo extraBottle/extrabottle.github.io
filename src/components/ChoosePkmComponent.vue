@@ -25,11 +25,6 @@
     :error="props.nameValid" :error-message="nameEmptyMsg" @filter="searchName" @input-value="manageModel"
     use-input hide-selected fill-input input-debounce="0" @update:model-value="fetchApiIng"
     :hint="nameSearchHint" hide-bottom-space :readonly="selectPkmName" />    
-    <!-- 직접 진화시킨 횟수 -->
-    <div v-if="showEvoCount" class="text-center">
-      직접 진화시킨 횟수: {{ evoCount }} 회
-      <q-slider color="secondary" v-model="evoCount" :min="0" :max="2"/>
-    </div>
     <!-- 레벨 -->
     <div class="text-center full-width">
       <q-btn color="secondary" round size="xs" icon="remove" @click="subtractLevel"></q-btn>
@@ -128,7 +123,7 @@
         <!-- 힐러 포함 여부 -->
         <q-checkbox v-else-if="showUseHealer" v-model="useHealer">
           <template v-slot:default>
-            추가 힐러 포켓몬 사용
+            힐러 포켓몬 사용
             <q-icon size="xl" name="img:images/sylveonLink.png" />
           </template>
         </q-checkbox>
@@ -239,7 +234,6 @@ myPkmDBStore.loadKorPkmName()
 const route = useRoute()
 // 보여줄 요소 관리
 const selectPkmName = ref(false)
-const showEvoCount = ref(true)
 const showIngChoose = ref(true)
 const showMainSkillLevel = ref(true)
 const showHbCount = ref(true)
@@ -260,7 +254,8 @@ watch(prevRoute, (newPath, oldPath)=>{
 })
 onBeforeUnmount(()=>{
   if(route.path === prevRoute.value){
-    if(prevRoute.value == '/rate'){      
+    if(prevRoute.value == '/rate'){   
+      myRateCalcStore.useHealer = useHealer.value   
       let subtractSkillLevel = 0
       for(let z=0; z< subSkills.value.length; z++){
         if(subSkills.value[z].label.includes("스킬 레벨 업")){
@@ -272,9 +267,7 @@ onBeforeUnmount(()=>{
       if(mainSkillLevel.value <= subtractSkillLevel){
         // 스렙업 서브가 사용자 입력 메인 스킬 레벨보다 작으면 적용 안했다고 가정해서 더함
         mainSkillLevel.value += subtractSkillLevel
-      }
-      // 힐러는 라이트 버전
-      myHealerInputStore.calcVer = calcVer.value      
+      }     
     }
     if(prevRoute.value == '/eeveelution'){
       myEeveeStore.storeEverything(pkmLevel.value, subSkills.value, upNature.value, downNature.value, preferEevee.value, fullSleep.value)
@@ -292,7 +285,7 @@ onBeforeUnmount(()=>{
       }  
       // store에 저장
       myInputStore.storeEverything(hbCount.value, erbCount.value, 
-        pkmName.value, pkmLevel.value, evoCount.value, subSkills.value, firstIngName.value,
+        pkmName.value, pkmLevel.value, subSkills.value, firstIngName.value,
         secondIngName.value, thirdIngName.value, fixedSecondIngName.value, fixedThirdIngName.value, upNature.value, downNature.value,
         selectedPkmDex.value, mainSkillLevel.value, useGoodCamp.value, useRibbon.value, ribbonLev.value, leftEvo.value, hasErb)
     }
@@ -325,8 +318,6 @@ const myRateCalcStore = useRateCalcStore()
 const pkmName = ref(myInputStore.pkmName)
 // 사용자 입력 포켓몬 레벨
 const pkmLevel = ref(myInputStore.pkmLevel)
-// 직접 진화시킨 횟수
-const evoCount = ref(myInputStore.evoCount)
 // 가능한 진화 횟수
 const leftEvo = ref(myInputStore.leftEvo)
 // 사용자 선택 보유중인 서브 스킬들
@@ -422,9 +413,6 @@ const didSelectAllSub = computed(()=>{
 const useGoodCamp = ref(myInputStore.useGoodCamp)
 // 힐러 쓰고 계산할지
 const useHealer = ref(myRateCalcStore.useHealer)
-const calcVer = computed(()=>{
-  return useHealer.value ? 'lightVer' : 'noHealer'
-})
 // 굿나잇리본 적용 여부
 const useRibbon = ref(myInputStore.useRibbon)
 const showRibbon = ref(false)
@@ -562,8 +550,7 @@ onBeforeMount(()=>{
     case '/eeveelution':
       selectPkmName.value = true
       showHbCount.value = false
-      showErbCount.value = false
-      showEvoCount.value = false
+      showErbCount.value = false      
       showIngChoose.value = false
       showMainSkillLevel.value = false
       showGoodCamp.value = false
