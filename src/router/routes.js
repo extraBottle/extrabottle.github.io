@@ -92,8 +92,9 @@ const routes = [
        }
     ],
   },
+
+  // 테스트용
   // {
-  //   // 테스트용
   //   path: '/test',
   //   component: () => import('layouts/MainLayout.vue'),
   //   children: [
@@ -101,6 +102,13 @@ const routes = [
   //       meta: { help: 'exp 계산부터 개체값 측정까지! 당신의 포켓몬을 완벽 분석해드립니다' }
   //      }
   //   ],
+  // },
+
+  // 점검용
+  // {
+  //   path: '/maintenance',
+  //   name: 'maintenance',
+  //   component: () => import('pages/MaintenancePage.vue'),
   // },
 
   // Always leave this as last one,
