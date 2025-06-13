@@ -58,13 +58,12 @@ module.exports = configure(function () {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: "/pkmSleepCalc/",
+      publicPath: "/",
       // publicPath: 'https://extrabottle.github.io/pkmSleepCalc/',
       // analyze: true,
       env: {
         // Supabase api
-        VITE_SUPABASE_API_KEY: process.env.VITE_SUPABASE_API_KEY,
-        // VITE_AWS_API_KEY: process.env.VITE_AWS_API_KEY
+        VITE_SUPABASE_API_KEY: process.env.VITE_SUPABASE_API_KEY        
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
